@@ -641,17 +641,23 @@ text(1,probsMat[1,1],txt,pos=2,cex=1.5)
 legend("topright",c("Pairwise","H","L"),lwd=2,
        lty=c("dotted","solid","dashed"),bty="n",cex=1.5)
 
-## ---- warning=FALSE-----------------------------------------------------------
+## ---- warning=FALSE, error=TRUE-----------------------------------------------
 n <- 10
 lambda <- 5
 ph_bcp <- block_counting_process(n)
 
+
+set.seed(0)
 ph_mv_sim_obj <- rMPH(R,ph_bcp)
 
+
+set.seed(19)
 ph_counts <- matrix(0,dim(ph_mv_sim_obj)[2],dim(ph_mv_sim_obj)[1])
 for(i in 1:R) {
   ph_counts[i,] <- rpois(n-1,lambda*ph_mv_sim_obj[,i])
 }
+
+
 
 subintensity_matrix <- ph_bcp$subint_mat
 
@@ -670,6 +676,8 @@ beone <- matrix(0,1,dim(bT)[1]);beone[1]=1 #(1,0,...,0)
 
 phi <- function(t) (exp(-1i*themean*t))*beone%*%solve(bS+lambda*diag(c(bA%*%(exp(1i*t)^bc))) )%*%bT%*%be
 
+
+
 #Invert numerically
 appvals <- ApproxCDF(phi,H = 1e5,eta=0.0001,xlim=c(-10*res,10*res),smoothe=TRUE)
 
@@ -679,6 +687,8 @@ yvals <- appvals[[2]]
 bc2 <- (1/res)*bc
 xvals2 <- (1/res)*xvals
 themean2 <- (1/res)*themean
+
+
 
 #Compute point probabilities of Watterson's Theta for theta = 10
 
@@ -699,6 +709,8 @@ for(i in 0:(len-1)) {
 
 wxt <- -10+a1*(0:(len-1)) # Possible values for  Watterson's Theta
 
+
+
 # Pairwise estimator for theta = 10
 
 ba <- ( 1:(n-1) )*( (n-1):1 ) #Coefficients of pair-wise estimator
@@ -712,6 +724,7 @@ be <- matrix(rep(1,dim(bMt)[1]))
 bmt <- be - bMt%*%be
 
 len = 1e3
+
 
 # Running bMt - the bMt is pretty large, computing its matrix-powers in the naive way as above is time-consuming.
 probs2 <- rep(0,len)
