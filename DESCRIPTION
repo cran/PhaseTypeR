@@ -1,13 +1,13 @@
 Type: Package
 Package: PhaseTypeR
 Title: General-Purpose Phase-Type Functions
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
     person("Iker", "Rivas-González", , "ikerrivas96@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0515-0628")),
-    person("Colin", "Guetemme", , "colin.guetemme@live.fr", role = "aut"),
     person("Asger", "Hobolth", , "asger@math.au.dk", role = "aut"),
-    person("Lars Nørvang", "Andersen", , "larsa@math.au.dk", role = "aut")
+    person("Lars Nørvang", "Andersen", , "larsa@math.au.dk", role = "aut"),
+    person("Colin", "Guetemme", , "colin.guetemme@live.fr", role = "aut")
   )
 Maintainer: Iker Rivas-González <ikerrivas96@gmail.com>
 Description: General implementation of core function from phase-type
@@ -31,11 +31,11 @@ VignetteBuilder: knitr
 Encoding: UTF-8
 RoxygenNote: 7.1.2
 NeedsCompilation: no
-Packaged: 2021-12-03 14:22:30 UTC; au595587
+Packaged: 2022-02-10 13:56:43 UTC; au595587
 Author: Iker Rivas-González [aut, cre]
     (<https://orcid.org/0000-0002-0515-0628>),
-  Colin Guetemme [aut],
   Asger Hobolth [aut],
-  Lars Nørvang Andersen [aut]
+  Lars Nørvang Andersen [aut],
+  Colin Guetemme [aut]
 Repository: CRAN
-Date/Publication: 2021-12-06 18:10:02 UTC
+Date/Publication: 2022-02-10 14:30:03 UTC

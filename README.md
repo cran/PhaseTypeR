@@ -6,6 +6,10 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/rivasiker/PhaseTypeR/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/rivasiker/PhaseTypeR/actions/workflows/check-standard.yaml)
+[![CRAN](https://www.r-pkg.org/badges/version/PhaseTypeR)](https://CRAN.R-project.org/package=PhaseTypeR)
+[![devel
+Version](https://img.shields.io/badge/devel-1.0.2-brightgreen.svg)](https://github.com/rivasiker/PhaseTypeR)
+[![downloads](https://cranlogs.r-pkg.org/badges/grand-total/PhaseTypeR)](https://CRAN.R-project.org/package=PhaseTypeR)
 [![Codecov test
 coverage](https://codecov.io/gh/rivasiker/PhaseTypeR/branch/master/graph/badge.svg)](https://app.codecov.io/gh/rivasiker/PhaseTypeR?branch=master)
 <!-- badges: end -->
@@ -20,6 +24,12 @@ functions for random draws; functions for reward-transformation; and
 functions for plotting the distributions as networks.
 
 ## Installation
+
+You can install `PhaseTypeR` from CRAN via:
+
+``` r
+install.packages("PhaseTypeR")
+```
 
 If you install devtools in your R environment with
 `install.packages("devtools")`, the development version of the package
