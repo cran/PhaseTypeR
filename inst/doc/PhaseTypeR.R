@@ -40,6 +40,8 @@ ph
 
 ## -----------------------------------------------------------------------------
 
+library(igraph)
+
 net <- phase_type_to_network(ph)
 set.seed(8)
 plot(net, edge.curved=.1, edge.label = E(net)$weight,

@@ -56,7 +56,7 @@ NULL
 
 dDPH <- function(x, obj){
 
-  if (class(obj) == 'disc_phase_type') {
+  if (is(obj, 'disc_phase_type')) {
     if (sum(x %% 1 > 0) > 0){
       stop('x should only contain integers.')
     }
@@ -92,7 +92,7 @@ qDPH <- function(p, obj){
 
   vec <- c()
   inv <- function(y) uniroot(function(q) pDPH(q, obj)-y, c(0,400))$root[1]
-  if (class(obj) == 'disc_phase_type') {
+  if (is(obj, 'disc_phase_type')) {
     for (i in p) {
       if (i > (1-sum(obj$init_probs))){
         vec <- c(vec, round(inv(i)))
@@ -116,7 +116,7 @@ qDPH <- function(p, obj){
 
 pDPH <- function(q, obj){
 
-  if (class(obj) == 'disc_phase_type') {
+  if (is(obj, 'disc_phase_type')) {
     e <- matrix(1, nrow = nrow(obj$subint_mat))
     prob_vec <- c()
     for(i in q){
@@ -140,7 +140,7 @@ pDPH <- function(q, obj){
 
 rDPH <- function(n, obj){
 
-  if (class(obj) == 'disc_phase_type') {
+  if (is(obj, 'disc_phase_type')) {
 
     if (length(n) > 1){
       n <- length(n)
@@ -156,9 +156,9 @@ rDPH <- function(n, obj){
     n_vec <- numeric(n)
 
 
-
+    rsum <- rowSums(subint_mat)
     # define the intensity matrix by adding the p+1 state column
-    int_mat <- cbind(subint_mat, 1 - rowSums(subint_mat))
+    int_mat <- cbind(subint_mat, 1 - ifelse(rsum < 0, 0, rsum))
 
     # for each n
     for (i in 1:n) {
@@ -191,7 +191,7 @@ rDPH <- function(n, obj){
 #' @export
 
 rFullDPH <- function(obj){
-  if (!(class(obj) == 'disc_phase_type')){
+  if (!(is(obj, 'disc_phase_type'))){
     stop("Please provide an object of class 'disc_phase_type'.")
   }
 
@@ -209,7 +209,8 @@ rFullDPH <- function(obj){
 
   curtime <- 1
   while(curstate <= n){
-    curstate <- sample(1:(n+1), 1, prob = int_mat[curstate,])
+    curstate <- sample(1:(n+1), 1,
+                       prob = ifelse(int_mat[curstate,]<0, 0, int_mat[curstate,]))
     if (curstate == states[length(states)]){
       curtime <- curtime + 1
     } else {

@@ -257,6 +257,7 @@ block_counting_process <- function(n){
 ## ----setup,  message=FALSE, warning=FALSE-------------------------------------
 set.seed(0)
 library(PhaseTypeR)
+library(expm)
 # source('auxiliary_functions.R')
 
 ## ---- message=FALSE, warning=FALSE--------------------------------------------

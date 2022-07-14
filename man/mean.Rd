@@ -8,8 +8,6 @@
 \alias{mean.mult_disc_phase_type}
 \title{Mean of Phase-Type Distributions}
 \usage{
-mean(x, ...)
-
 \method{mean}{cont_phase_type}(x, ...)
 
 \method{mean}{disc_phase_type}(x, ...)
@@ -68,6 +66,5 @@ mean(ph2)
 mean(ph2, 1)
 ## Mean for the second state in the reward matrix
 mean(ph2, 2)
-
 
 }

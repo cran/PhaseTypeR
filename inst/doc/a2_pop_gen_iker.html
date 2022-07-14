@@ -15,7 +15,19 @@
 
 <title>Using PhaseTypeR for population genetics</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -148,7 +160,187 @@ div.csl-indent {
 }
 </style>
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -160,53 +352,118 @@ div.csl-indent {
 
 
 
-<h1 class="title toc-ignore">Using PhaseTypeR for population genetics</h1>
+<h1 class="title toc-ignore">Using PhaseTypeR for population
+genetics</h1>
 <h4 class="author">Iker Rivas-González</h4>
 
 
 <div id="TOC">
 <ul>
-<li><a href="#introduction-to-the-package">1. Introduction to the package</a></li>
-<li><a href="#the-univariate-continuous-phase-type-distribution-t_mrca-and-t_total">2. The Univariate Continuous Phase-Type Distribution: <span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(T_{Total}\)</span></a>
+<li><a href="#introduction-to-the-package">1. Introduction to the
+package</a></li>
+<li><a href="#the-univariate-continuous-phase-type-distribution-t_mrca-and-t_total">2.
+The Univariate Continuous Phase-Type Distribution: <span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(T_{Total}\)</span></a>
 <ul>
-<li><a href="#theoretical-background">2.1. Theoretical background</a></li>
-<li><a href="#time-until-the-most-recent-common-ancestor-t_mrca">2.2. Time until the most recent common ancestor (<span class="math inline">\(T_{MRCA}\)</span>)</a></li>
-<li><a href="#total-tree-length-t_total-and-the-reward-transformation">2.3. Total tree length (<span class="math inline">\(T_{Total}\)</span>) and the reward-transformation</a></li>
-<li><a href="#density-distribution-and-quantile-functions">2.4. Density, distribution and quantile functions</a></li>
+<li><a href="#theoretical-background">2.1. Theoretical
+background</a></li>
+<li><a href="#time-until-the-most-recent-common-ancestor-t_mrca">2.2.
+Time until the most recent common ancestor (<span class="math inline">\(T_{MRCA}\)</span>)</a></li>
+<li><a href="#total-tree-length-t_total-and-the-reward-transformation">2.3.
+Total tree length (<span class="math inline">\(T_{Total}\)</span>) and
+the reward-transformation</a></li>
+<li><a href="#density-distribution-and-quantile-functions">2.4. Density,
+distribution and quantile functions</a></li>
 </ul></li>
-<li><a href="#the-univariate-discrete-phase-type-distribution-s_total-xi_i-and-xi_k">3. The Univariate Discrete Phase-Type Distribution: <span class="math inline">\(S_{total}\)</span>, <span class="math inline">\(\xi_i\)</span> and <span class="math inline">\(\xi_{k+}\)</span></a>
+<li><a href="#the-univariate-discrete-phase-type-distribution-s_total-xi_i-and-xi_k">3.
+The Univariate Discrete Phase-Type Distribution: <span class="math inline">\(S_{total}\)</span>, <span class="math inline">\(\xi_i\)</span> and <span class="math inline">\(\xi_{k+}\)</span></a>
 <ul>
-<li><a href="#theoretical-background-1">3.1. Theoretical background</a></li>
-<li><a href="#total-number-of-segregating-sites-s_total">3.2. Total number of segregating sites (<span class="math inline">\(S_{total}\)</span>)</a></li>
+<li><a href="#theoretical-background-1">3.1. Theoretical
+background</a></li>
+<li><a href="#total-number-of-segregating-sites-s_total">3.2. Total
+number of segregating sites (<span class="math inline">\(S_{total}\)</span>)</a></li>
 <li><a href="#i-tons-xi_i">3.3. i-tons (<span class="math inline">\(\xi_i\)</span>)</a></li>
-<li><a href="#density-distribution-and-quantile-functions-1">3.4. Density, distribution and quantile functions</a></li>
+<li><a href="#density-distribution-and-quantile-functions-1">3.4.
+Density, distribution and quantile functions</a></li>
 </ul></li>
-<li><a href="#the-multivariate-continuous-phase-type-distribution-y_i">4. The Multivariate Continuous Phase-Type Distribution: <span class="math inline">\(Y_i\)</span></a></li>
+<li><a href="#the-multivariate-continuous-phase-type-distribution-y_i">4. The
+Multivariate Continuous Phase-Type Distribution: <span class="math inline">\(Y_i\)</span></a></li>
 <li><a href="#references">References</a></li>
 </ul>
 </div>
 
 <div id="introduction-to-the-package" class="section level1">
 <h1>1. Introduction to the package</h1>
-<p><code>PhaseTypeR</code> is a flexible and efficient package for using phase-type theory in R. This vignette describes how to use the general-purpose phase-type functions for modeling common statistics in population genomics at the finest level. The formulation of general phase-type theory can be consulted in Bladt and Nielsen’s ‘Matrix-Exponential Distributions in Applied Probability’ <span class="citation">(<a href="#ref-Bladt2017" role="doc-biblioref">Bladt and Nielsen 2017</a>)</span>, and the notation for this vignette is also adopted from this book. On the other hand, the theory behind applying phase-type theory in population genomics is based on Hobolth et al. <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span>.</p>
-<p>Do not hesitate to run <code>?PhaseTypeR</code> for a quick summary of the available general-purpose functions, or to open the help files for the individual functions.</p>
+<p><code>PhaseTypeR</code> is a flexible and efficient package for using
+phase-type theory in R. This vignette describes how to use the
+general-purpose phase-type functions for modeling common statistics in
+population genomics at the finest level. The formulation of general
+phase-type theory can be consulted in Bladt and Nielsen’s
+‘Matrix-Exponential Distributions in Applied Probability’ <span class="citation">(<a href="#ref-Bladt2017" role="doc-biblioref">Bladt
+and Nielsen 2017</a>)</span>, and the notation for this vignette is also
+adopted from this book. On the other hand, the theory behind applying
+phase-type theory in population genomics is based on Hobolth et al.
+<span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span>.</p>
+<p>Do not hesitate to run <code>?PhaseTypeR</code> for a quick summary
+of the available general-purpose functions, or to open the help files
+for the individual functions.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PhaseTypeR)</span></code></pre></div>
 </div>
 <div id="the-univariate-continuous-phase-type-distribution-t_mrca-and-t_total" class="section level1">
 <h1>2. The Univariate Continuous Phase-Type Distribution: <span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(T_{Total}\)</span></h1>
 <div id="theoretical-background" class="section level2">
 <h2>2.1. Theoretical background</h2>
-<p>In an evolutionary tree the time until two sequences coalesce <span class="math inline">\(T_i\)</span> can be measured in number of generations <span class="math inline">\(R_i\)</span> divided by the population size <span class="math inline">\(N\)</span>, this is, <span class="math inline">\(T_i=R_i/N\)</span>. <span class="math inline">\(T_i\)</span> can easily be proven to approximate to an exponential distribution with rate <span class="math inline">\(\binom{i}{2}\)</span> <span class="citation">(<a href="#ref-Kingman1982" role="doc-biblioref">Kingman 1982</a>)</span>.</p>
-<p>In order to understand the evolutionary history of sequences two additional quantities can be defined –namely the time until the most recent common ancestor <span class="math inline">\(T_{MRCA}\)</span> and the total tree length <span class="math inline">\(T_{Total}\)</span>. <span class="math inline">\(T_{MRCA}\)</span> will simply be the sum of all times until two sequences coalesce, in other words <span class="math inline">\(T_{MRCA}=T_n+T_{n-1}+...+T_2\)</span>, where <span class="math inline">\(T_i\sim\text{exp}(\binom{i}{2})\)</span>. <span class="math inline">\(T_{Total}\)</span>, on the other hand, takes into account the length of all possible branches, so <span class="math inline">\(T_{Total}=nT_n+(n-1)T_{n-1}+...+2T_2\)</span> and, thus, <span class="math inline">\(iT_i\sim \text{exp}(\frac{i-1}{2})\)</span>.</p>
-<p>The mean and variance of these two quantities can be derived relatively easily. Defining their distribution, however, is more challenging since both <span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(T_{Total}\)</span> are sums of independent exponentially distributed variables with different rates. Their distribution can be computed as a series of convolutions, but their formulation, application and interpretation might be challenging for the average population geneticist.</p>
-<p>Instead, we can think of the sum of exponential distributions as a continuous-time Markov chain, where coalescent events are represented as Markov jumps with rate <span class="math inline">\(T_i\)</span> for <span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(iT_i\)</span> for <span class="math inline">\(T_{Total}\)</span>. The Markov chain will end with an absorbing state, which in both cases will be the MRCA.</p>
-<p>The Markov chain can be represented using phase-type theory, where the jump rates are defined with a sub-intensity matrix <span class="math inline">\(T\)</span> and the initial distribution will be defined as a row vector <span class="math inline">\(\pi\)</span>. If we define <span class="math inline">\(\tau\)</span> as the smallest time (or length) to reach the absorbing state, then <span class="math inline">\(\tau\sim PH(\pi,T)\)</span>. This continuous phase-type distribution has well-documented and easy-to-implement formulas for the expectation, the variance, the survival function, the distribution function and the density function. Moreover, since both <span class="math inline">\(\pi\)</span> and <span class="math inline">\(T\)</span> can easily be specified, we can represent evolutionary histories that do not follow the standard coalescent model and still use the same phase-type formulas.</p>
-<p><code>PhaseTypeR</code> contains an efficient implementation of continuous phase-type distributions. This section shows how to create phase-type representations of <span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(T_{Total}\)</span> under the Kingman’s coalescent model, and it provides some guidelines for modeling these quantities for other non-standard coalescent models.</p>
+<p>In an evolutionary tree the time until two sequences coalesce <span class="math inline">\(T_i\)</span> can be measured in number of
+generations <span class="math inline">\(R_i\)</span> divided by the
+population size <span class="math inline">\(N\)</span>, this is, <span class="math inline">\(T_i=R_i/N\)</span>. <span class="math inline">\(T_i\)</span> can easily be proven to approximate
+to an exponential distribution with rate <span class="math inline">\(\binom{i}{2}\)</span> <span class="citation">(<a href="#ref-Kingman1982" role="doc-biblioref">Kingman
+1982</a>)</span>.</p>
+<p>In order to understand the evolutionary history of sequences two
+additional quantities can be defined –namely the time until the most
+recent common ancestor <span class="math inline">\(T_{MRCA}\)</span> and
+the total tree length <span class="math inline">\(T_{Total}\)</span>.
+<span class="math inline">\(T_{MRCA}\)</span> will simply be the sum of
+all times until two sequences coalesce, in other words <span class="math inline">\(T_{MRCA}=T_n+T_{n-1}+...+T_2\)</span>, where <span class="math inline">\(T_i\sim\text{exp}(\binom{i}{2})\)</span>. <span class="math inline">\(T_{Total}\)</span>, on the other hand, takes into
+account the length of all possible branches, so <span class="math inline">\(T_{Total}=nT_n+(n-1)T_{n-1}+...+2T_2\)</span> and,
+thus, <span class="math inline">\(iT_i\sim
+\text{exp}(\frac{i-1}{2})\)</span>.</p>
+<p>The mean and variance of these two quantities can be derived
+relatively easily. Defining their distribution, however, is more
+challenging since both <span class="math inline">\(T_{MRCA}\)</span> and
+<span class="math inline">\(T_{Total}\)</span> are sums of independent
+exponentially distributed variables with different rates. Their
+distribution can be computed as a series of convolutions, but their
+formulation, application and interpretation might be challenging for the
+average population geneticist.</p>
+<p>Instead, we can think of the sum of exponential distributions as a
+continuous-time Markov chain, where coalescent events are represented as
+Markov jumps with rate <span class="math inline">\(T_i\)</span> for
+<span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(iT_i\)</span> for <span class="math inline">\(T_{Total}\)</span>. The Markov chain will end with
+an absorbing state, which in both cases will be the MRCA.</p>
+<p>The Markov chain can be represented using phase-type theory, where
+the jump rates are defined with a sub-intensity matrix <span class="math inline">\(T\)</span> and the initial distribution will be
+defined as a row vector <span class="math inline">\(\pi\)</span>. If we
+define <span class="math inline">\(\tau\)</span> as the smallest time
+(or length) to reach the absorbing state, then <span class="math inline">\(\tau\sim PH(\pi,T)\)</span>. This continuous
+phase-type distribution has well-documented and easy-to-implement
+formulas for the expectation, the variance, the survival function, the
+distribution function and the density function. Moreover, since both
+<span class="math inline">\(\pi\)</span> and <span class="math inline">\(T\)</span> can easily be specified, we can
+represent evolutionary histories that do not follow the standard
+coalescent model and still use the same phase-type formulas.</p>
+<p><code>PhaseTypeR</code> contains an efficient implementation of
+continuous phase-type distributions. This section shows how to create
+phase-type representations of <span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(T_{Total}\)</span> under the Kingman’s coalescent
+model, and it provides some guidelines for modeling these quantities for
+other non-standard coalescent models.</p>
 </div>
 <div id="time-until-the-most-recent-common-ancestor-t_mrca" class="section level2">
 <h2>2.2. Time until the most recent common ancestor (<span class="math inline">\(T_{MRCA}\)</span>)</h2>
-<p>Following Hobolth et al. <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span>, we can build a phase-type representation of <span class="math inline">\(T_{MRCA}\)</span> by defining the sub-intensity matrix, which each row and column will represent the states of the coalescent process.</p>
-<p>For example, for Kingman’s coalescent the sub-intensity matrix can be defined as:</p>
+<p>Following Hobolth et al. <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span>, we can
+build a phase-type representation of <span class="math inline">\(T_{MRCA}\)</span> by defining the sub-intensity
+matrix, which each row and column will represent the states of the
+coalescent process.</p>
+<p>For example, for Kingman’s coalescent the sub-intensity matrix can be
+defined as:</p>
 <p><span class="math display">\[
 \boldsymbol{T}
 =
@@ -220,21 +477,29 @@ div.csl-indent {
 \]</span></p>
 <p>and the initial probability vector</p>
 <p><span class="math display">\[
- \boldsymbol{\pi} = (1,\ 0, \ ...\,,\ 0)
+\boldsymbol{\pi} = (1,\ 0, \ ...\,,\ 0)
 \]</span></p>
-<p>We can therefore define <span class="math inline">\(T_{MRCA}\)</span> as following a phase-type distribution using <code>PhaseTypeR</code> with the following function</p>
+<p>We can therefore define <span class="math inline">\(T_{MRCA}\)</span>
+as following a phase-type distribution using <code>PhaseTypeR</code>
+with the following function</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for any integer n &gt; 2</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>subint_mat_t_mrca <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  subint_mat <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="sc">-</span><span class="fu">choose</span>(n<span class="sc">:</span><span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  subint_mat[<span class="sc">-</span>(n<span class="dv">-1</span>), <span class="sc">-</span><span class="dv">1</span>] <span class="ot">&lt;-</span> subint_mat[<span class="sc">-</span>(n<span class="dv">-1</span>), <span class="sc">-</span><span class="dv">1</span>] <span class="sc">-</span> subint_mat[<span class="sc">-</span>(n<span class="dv">-1</span>), <span class="sc">-</span>(n<span class="dv">-1</span>)]</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(subint_mat)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>For a sample size of <span class="math inline">\(n=4\)</span>, the sub-intensity matrix can be generated using the function above, and the initial probabilities can be defined as a vector of length <span class="math inline">\(n-1\)</span>, starting with one and the rest entries filled with zeros:</p>
+<p>For a sample size of <span class="math inline">\(n=4\)</span>, the
+sub-intensity matrix can be generated using the function above, and the
+initial probabilities can be defined as a vector of length <span class="math inline">\(n-1\)</span>, starting with one and the rest
+entries filled with zeros:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>subint_mat <span class="ot">&lt;-</span> <span class="fu">subint_mat_t_mrca</span>(n)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>init_probs <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">rep</span>(<span class="dv">0</span>,n<span class="dv">-2</span>)), <span class="dv">1</span>, n<span class="dv">-1</span>)</span></code></pre></div>
-<p>Now we can use a <code>cont_phase_type</code> class of the <code>PhaseTypeR</code> package to generate a phase-type representation of <span class="math inline">\(T_{MRCA}\)</span> by using <code>PH()</code>:</p>
+<p>Now we can use a <code>cont_phase_type</code> class of the
+<code>PhaseTypeR</code> package to generate a phase-type representation
+of <span class="math inline">\(T_{MRCA}\)</span> by using
+<code>PH()</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>t_mrca_4 <span class="ot">&lt;-</span> <span class="fu">PH</span>(subint_mat, init_probs)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -254,7 +519,8 @@ div.csl-indent {
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;cont_phase_type&quot;</span></span></code></pre></div>
-<p>There are a number of methods associated with the class <code>cont_phase_type</code>. For example, the mean for <span class="math inline">\(T_{MRCA}\)</span> can be computed using:</p>
+<p>There are a number of methods associated with the class
+<code>cont_phase_type</code>. For example, the mean for <span class="math inline">\(T_{MRCA}\)</span> can be computed using:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(t_mrca_4)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.5</span></span></code></pre></div>
@@ -264,9 +530,14 @@ div.csl-indent {
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.138889</span></span></code></pre></div>
 </div>
 <div id="total-tree-length-t_total-and-the-reward-transformation" class="section level2">
-<h2>2.3. Total tree length (<span class="math inline">\(T_{Total}\)</span>) and the reward-transformation</h2>
-<p>In a similar way to <span class="math inline">\(T_{MRCA}\)</span>, the total tree length or <span class="math inline">\(T_{Total}\)</span> can also be represented using phase-type theory <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">Hobolth, Siri-Jégousse, and Bladt 2019</a>)</span>.</p>
-<p>For Kingman’s coalescent the sub-intensity matrix can be defined as:</p>
+<h2>2.3. Total tree length (<span class="math inline">\(T_{Total}\)</span>) and the
+reward-transformation</h2>
+<p>In a similar way to <span class="math inline">\(T_{MRCA}\)</span>,
+the total tree length or <span class="math inline">\(T_{Total}\)</span>
+can also be represented using phase-type theory <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">Hobolth, Siri-Jégousse, and Bladt
+2019</a>)</span>.</p>
+<p>For Kingman’s coalescent the sub-intensity matrix can be defined
+as:</p>
 <p><span class="math display">\[
 \boldsymbol{T}
 =
@@ -280,7 +551,7 @@ div.csl-indent {
 \]</span></p>
 <p>and the initial probability vector</p>
 <p><span class="math display">\[
- \boldsymbol{\pi} = (1,\ 0, \ ...\,,\ 0)
+\boldsymbol{\pi} = (1,\ 0, \ ...\,,\ 0)
 \]</span></p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>subint_mat_t_total <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
@@ -293,12 +564,15 @@ div.csl-indent {
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  subint_mat</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>For a sample size of <span class="math inline">\(n=4\)</span>, the sub-intensity matrix and the initial probabilities can be defined as:</p>
+<p>For a sample size of <span class="math inline">\(n=4\)</span>, the
+sub-intensity matrix and the initial probabilities can be defined
+as:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>subint_mat <span class="ot">&lt;-</span> <span class="fu">subint_mat_t_total</span>(n)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>init_probs <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">rep</span>(<span class="dv">0</span>,n<span class="dv">-2</span>)), <span class="dv">1</span>, n<span class="dv">-1</span>)</span></code></pre></div>
-<p><span class="math inline">\(T_{Total}\)</span> can also be represented using the <code>cont_phase_type</code> class:</p>
+<p><span class="math inline">\(T_{Total}\)</span> can also be
+represented using the <code>cont_phase_type</code> class:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>t_total_4 <span class="ot">&lt;-</span> <span class="fu">PH</span>(subint_mat, init_probs)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -318,19 +592,31 @@ div.csl-indent {
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;cont_phase_type&quot;</span></span></code></pre></div>
-<p>Without further ado, we can use the exact same phase-type formulas (and thus <code>PhaseTypeR</code> functions) for calculating the mean and variance of <span class="math inline">\(T_{Total}\)</span>:</p>
+<p>Without further ado, we can use the exact same phase-type formulas
+(and thus <code>PhaseTypeR</code> functions) for calculating the mean
+and variance of <span class="math inline">\(T_{Total}\)</span>:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(t_total_4)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.666667</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(t_total_4)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 5.444444</span></span></code></pre></div>
-<p><span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(T_{total}\)</span> are tightly interconnected. In fact,</p>
+<p><span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(T_{total}\)</span> are tightly interconnected. In
+fact,</p>
 <p><span class="math display">\[
 T_{total} = T_{MRCA} \circ [n, n-1, ..., 2]
 \]</span></p>
-<p>Indeed the core of the sub-intensity matrix for <span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(T_{Total}\)</span> is the same. But when <span class="math inline">\(T_{MRCA}\)</span> measure the time to reach the MRCA, so the length of one branch, <span class="math inline">\(T_{Total}\)</span> will measure the length of all branches. This leads to proceed to a reward transformation of the original sub-intensity matrix.</p>
-<p>The reward-transformation is a way to give more weights to some states than other. So the first state of the sub-intensity matrix should have a rate of <span class="math inline">\(n\)</span>, because before any coalescent event there are <span class="math inline">\(n\)</span> lineages, then the second state a rate of <span class="math inline">\(n-1\)</span> and so on.</p>
-<p>Therefore, <span class="math inline">\(T_{total}\)</span> can be represented as a reward-transformed <span class="math inline">\(T_{MRCA}\)</span>, where the reward vector is <span class="math inline">\([n, n-1, ..., 2]\)</span>:</p>
+<p>Indeed the core of the sub-intensity matrix for <span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(T_{Total}\)</span> is the same. But when <span class="math inline">\(T_{MRCA}\)</span> measure the time to reach the
+MRCA, so the length of one branch, <span class="math inline">\(T_{Total}\)</span> will measure the length of all
+branches. This leads to proceed to a reward transformation of the
+original sub-intensity matrix.</p>
+<p>The reward-transformation is a way to give more weights to some
+states than other. So the first state of the sub-intensity matrix should
+have a rate of <span class="math inline">\(n\)</span>, because before
+any coalescent event there are <span class="math inline">\(n\)</span>
+lineages, then the second state a rate of <span class="math inline">\(n-1\)</span> and so on.</p>
+<p>Therefore, <span class="math inline">\(T_{total}\)</span> can be
+represented as a reward-transformed <span class="math inline">\(T_{MRCA}\)</span>, where the reward vector is
+<span class="math inline">\([n, n-1, ..., 2]\)</span>:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>t_total_4_bis <span class="ot">&lt;-</span> <span class="fu">reward_phase_type</span>(t_mrca_4, <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>t_total_4_bis</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $subint_mat</span></span>
@@ -352,7 +638,12 @@ T_{total} = T_{MRCA} \circ [n, n-1, ..., 2]
 </div>
 <div id="density-distribution-and-quantile-functions" class="section level2">
 <h2>2.4. Density, distribution and quantile functions</h2>
-<p><code>PhaseTypeR</code> also includes the density function (<code>dPH()</code>), quantile function (<code>qPH()</code>), distribution function (<code>pPH()</code>) and random draw generator (<code>rPH()</code>) for continuous phase-type distributions. We can therefore apply these functions for our phase-type representation of <span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(T_{Total}\)</span>.</p>
+<p><code>PhaseTypeR</code> also includes the density function
+(<code>dPH()</code>), quantile function (<code>qPH()</code>),
+distribution function (<code>pPH()</code>) and random draw generator
+(<code>rPH()</code>) for continuous phase-type distributions. We can
+therefore apply these functions for our phase-type representation of
+<span class="math inline">\(T_{MRCA}\)</span> and <span class="math inline">\(T_{Total}\)</span>.</p>
 <p>For example, the density function:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dPH</span>(<span class="fl">0.5</span>, t_mrca_4)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.4821092</span></span>
@@ -421,23 +712,69 @@ T_{total} = T_{MRCA} \circ [n, n-1, ..., 2]
 <h1>3. The Univariate Discrete Phase-Type Distribution: <span class="math inline">\(S_{total}\)</span>, <span class="math inline">\(\xi_i\)</span> and <span class="math inline">\(\xi_{k+}\)</span></h1>
 <div id="theoretical-background-1" class="section level2">
 <h2>3.1. Theoretical background</h2>
-<p>Some quantities in population genomics are discrete, such as the total number of segregating sites <span class="math inline">\(S_{total}\)</span> or other statistics related to the site-frequency spectrum (singletons, doubletons, tail statistic, etc.). Representing the site-frequency spectrum, or SFS, can be challenging if the sample size is large, if the data does not follow Kingman’s coalescence or if we are trying to estimate the mutation parameter <span class="math inline">\(\theta\)</span> using non-standard estimators.</p>
-<p>Luckily, all these quantities can be represented using discrete phase-type theory. Similar to the continuous phase-type distribution being a generalization of exponentially distributed variables, the discrete phase-type distribution can be seen as a generalization of various geometric distributions. Each state in the discrete phase-type distribution will represent a stochastic process, such that the time until absorption of a random variable (<span class="math inline">\(\tau\)</span>) follows an absorbing Markov chain. In this case we say that <span class="math inline">\(\tau+1\sim DPH(\pi, T)\)</span>, where <span class="math inline">\(T\)</span> is the sub-intensity matrix that gathers the transition rates and <span class="math inline">\(\pi\)</span> is the vector of initial probabilities.</p>
-<p>The discrete phase-type representation of <span class="math inline">\(S_{total}\)</span> can be built from the continuous phase-type representation of the total branch length. Following <strong>theorem 3.5</strong> in Hobolth et al. <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span>, the total branch length can be discretized if the mutation parameter <span class="math inline">\(\theta\)</span> is supplied.</p>
-<p>On the other hand, singletons, doubletons and related variables (referred to as i-tons or <span class="math inline">\(\xi_i\)</span> throughout this vignette), require a more elaborate formulation. The idea behind consists in first building a continuous phase-type representation of the coalescent process, where the sub-intensity matrix will contain the rates of transition between all the possible branch types of all possible genealogies. Among all these branches, only a certain number will give rise to i-tons. We can calculate which branches these are, together with the weights associated to each of them. Using this information, we can reward-transform the continuous phase-type representation of the coalescent process, so it only represents those branches that give rise to a certain i-ton. Afterwards, we can discretize this representation using <strong>theorem 3.5</strong> in Hobolth et. al <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span> and the mutation parameter <span class="math inline">\(\theta\)</span>.</p>
-<p>Bear in mind that it is possible for some i-tons to never be observed. This means that the initial probability vector might not sum up to 1, because the variable might directly jump to the absorbing state. The probability that this happens is the so-called defect.</p>
-<p>Because phase-type theory has well-defined functions for discrete phase-type distributions, the expectation, the variance, the survival function, the distribution function and the density function of all the variables defined above can be computed efficiently. <code>PhaseTypeR</code> contains an efficient implementation of discrete phase-type distributions and all these functions associated to them.</p>
+<p>Some quantities in population genomics are discrete, such as the
+total number of segregating sites <span class="math inline">\(S_{total}\)</span> or other statistics related to
+the site-frequency spectrum (singletons, doubletons, tail statistic,
+etc.). Representing the site-frequency spectrum, or SFS, can be
+challenging if the sample size is large, if the data does not follow
+Kingman’s coalescence or if we are trying to estimate the mutation
+parameter <span class="math inline">\(\theta\)</span> using non-standard
+estimators.</p>
+<p>Luckily, all these quantities can be represented using discrete
+phase-type theory. Similar to the continuous phase-type distribution
+being a generalization of exponentially distributed variables, the
+discrete phase-type distribution can be seen as a generalization of
+various geometric distributions. Each state in the discrete phase-type
+distribution will represent a stochastic process, such that the time
+until absorption of a random variable (<span class="math inline">\(\tau\)</span>) follows an absorbing Markov chain.
+In this case we say that <span class="math inline">\(\tau+1\sim DPH(\pi,
+T)\)</span>, where <span class="math inline">\(T\)</span> is the
+sub-intensity matrix that gathers the transition rates and <span class="math inline">\(\pi\)</span> is the vector of initial
+probabilities.</p>
+<p>The discrete phase-type representation of <span class="math inline">\(S_{total}\)</span> can be built from the
+continuous phase-type representation of the total branch length.
+Following <strong>theorem 3.5</strong> in Hobolth et al. <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span>, the total branch length can be
+discretized if the mutation parameter <span class="math inline">\(\theta\)</span> is supplied.</p>
+<p>On the other hand, singletons, doubletons and related variables
+(referred to as i-tons or <span class="math inline">\(\xi_i\)</span>
+throughout this vignette), require a more elaborate formulation. The
+idea behind consists in first building a continuous phase-type
+representation of the coalescent process, where the sub-intensity matrix
+will contain the rates of transition between all the possible branch
+types of all possible genealogies. Among all these branches, only a
+certain number will give rise to i-tons. We can calculate which branches
+these are, together with the weights associated to each of them. Using
+this information, we can reward-transform the continuous phase-type
+representation of the coalescent process, so it only represents those
+branches that give rise to a certain i-ton. Afterwards, we can
+discretize this representation using <strong>theorem 3.5</strong> in
+Hobolth et. al <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span> and the mutation parameter <span class="math inline">\(\theta\)</span>.</p>
+<p>Bear in mind that it is possible for some i-tons to never be
+observed. This means that the initial probability vector might not sum
+up to 1, because the variable might directly jump to the absorbing
+state. The probability that this happens is the so-called defect.</p>
+<p>Because phase-type theory has well-defined functions for discrete
+phase-type distributions, the expectation, the variance, the survival
+function, the distribution function and the density function of all the
+variables defined above can be computed efficiently.
+<code>PhaseTypeR</code> contains an efficient implementation of discrete
+phase-type distributions and all these functions associated to them.</p>
 </div>
 <div id="total-number-of-segregating-sites-s_total" class="section level2">
 <h2>3.2. Total number of segregating sites (<span class="math inline">\(S_{total}\)</span>)</h2>
-<p>As explained above, we can use our previous definition of <span class="math inline">\(T_{total}\)</span> and use <strong>theorem 3.5</strong> in Hobolth et. al <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span> for a given theta to discretize the phase-type distribution into the sub-intensity matrix for <span class="math inline">\(S_{total}\)</span>:</p>
+<p>As explained above, we can use our previous definition of <span class="math inline">\(T_{total}\)</span> and use <strong>theorem
+3.5</strong> in Hobolth et. al <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span> for a
+given theta to discretize the phase-type distribution into the
+sub-intensity matrix for <span class="math inline">\(S_{total}\)</span>:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="dv">3</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>subint_mat <span class="ot">&lt;-</span> t_total_4<span class="sc">$</span>subint_mat</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>init_probs <span class="ot">&lt;-</span> t_total_4<span class="sc">$</span>init_probs</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>disc_subint_mat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">diag</span>(<span class="fu">nrow</span>(subint_mat)) <span class="sc">-</span> <span class="dv">2</span><span class="sc">/</span>theta <span class="sc">*</span> subint_mat)</span></code></pre></div>
-<p>And we can now use the <code>DPH()</code> function of <code>PhaseTypeR</code> to build a discrete phase-type class <code>disc_phase_type</code> for <span class="math inline">\(S_{total}\)</span>:</p>
+<p>And we can now use the <code>DPH()</code> function of
+<code>PhaseTypeR</code> to build a discrete phase-type class
+<code>disc_phase_type</code> for <span class="math inline">\(S_{total}\)</span>:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>s_tot_4_3 <span class="ot">&lt;-</span> <span class="fu">DPH</span>(disc_subint_mat, init_probs)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>s_tot_4_3</span>
@@ -456,18 +793,28 @@ T_{total} = T_{MRCA} \circ [n, n-1, ..., 2]
 <span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
 <span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;disc_phase_type&quot;</span></span></code></pre></div>
-<p>The variance and the expectation of any discrete phase-type distribution can be computed with <code>var()</code> and <code>mean()</code> respectively:</p>
+<p>The variance and the expectation of any discrete phase-type
+distribution can be computed with <code>var()</code> and
+<code>mean()</code> respectively:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(s_tot_4_3)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 6.5</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(s_tot_4_3)</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 17.75</span></span></code></pre></div>
-<p><span class="math inline">\(S_{total}\)</span> can also be defined in a different way. As suggested by Hobolth et al. <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span>, we can get a matrix that summarizes all the possible states, each state being a specific combination of i-ton branches.</p>
-<p>As a mock example, we will be using a sample size of <span class="math inline">\(n=4\)</span>, although the matrix corresponding to an arbitrary sample size can be obtained using the so-called block-counting process <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">Hobolth, Siri-Jégousse, and Bladt 2019</a>)</span>. Using the standard coalescent model, we can define this matrix as:</p>
+<p><span class="math inline">\(S_{total}\)</span> can also be defined in
+a different way. As suggested by Hobolth et al. <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span>, we can get a matrix that
+summarizes all the possible states, each state being a specific
+combination of i-ton branches.</p>
+<p>As a mock example, we will be using a sample size of <span class="math inline">\(n=4\)</span>, although the matrix corresponding to
+an arbitrary sample size can be obtained using the so-called
+block-counting process <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">Hobolth, Siri-Jégousse, and
+Bladt 2019</a>)</span>. Using the standard coalescent model, we can
+define this matrix as:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>subint_itons_4 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>,  <span class="dv">6</span>,  <span class="dv">0</span>,  <span class="dv">0</span>,</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                            <span class="dv">0</span>, <span class="sc">-</span><span class="dv">3</span>,  <span class="dv">2</span>,  <span class="dv">1</span>,</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                            <span class="dv">0</span>,  <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>,  <span class="dv">0</span>,</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                            <span class="dv">0</span>,  <span class="dv">0</span>,  <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">byrow =</span> T)</span></code></pre></div>
-<p>And we can also define a continuous phase-type representation of this process:</p>
+<p>And we can also define a continuous phase-type representation of this
+process:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>kingman_4 <span class="ot">&lt;-</span> <span class="fu">PH</span>(subint_itons_4)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in check_phase_type(subint_mat, init_probs): </span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  The initial probability vector is automatically generated.</span></span>
@@ -488,7 +835,8 @@ T_{total} = T_{MRCA} \circ [n, n-1, ..., 2]
 <span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
 <span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;cont_phase_type&quot;</span></span></code></pre></div>
-<p>And then we must define a reward vector corresponding to each of the i-tons for each of the states to get a phase-type. In this case:</p>
+<p>And then we must define a reward vector corresponding to each of the
+i-tons for each of the states to get a phase-type. In this case:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>reward <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>seg_sites_cont_4 <span class="ot">&lt;-</span> <span class="fu">reward_phase_type</span>(kingman_4, reward)</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>seg_sites_cont_4</span>
@@ -508,7 +856,9 @@ T_{total} = T_{MRCA} \circ [n, n-1, ..., 2]
 <span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;cont_phase_type&quot;</span></span></code></pre></div>
-<p>Now we need to discretize this continuous phase-type distribution for getting the discrete phase-type representation of <span class="math inline">\(S_{total}\)</span>. Using <strong>theorem 3.5</strong> in Hobolth et. al <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span>:</p>
+<p>Now we need to discretize this continuous phase-type distribution for
+getting the discrete phase-type representation of <span class="math inline">\(S_{total}\)</span>. Using <strong>theorem
+3.5</strong> in Hobolth et. al <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span>:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="dv">3</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>subint_mat <span class="ot">&lt;-</span> seg_sites_cont_4<span class="sc">$</span>subint_mat</span>
@@ -534,17 +884,31 @@ T_{total} = T_{MRCA} \circ [n, n-1, ..., 2]
 <span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
 <span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;disc_phase_type&quot;</span></span></code></pre></div>
-<p>This representation seems to differ from the one defined on top, but they are equivalent in nature. For example, if we look at the mean and the variance of this new definition:</p>
+<p>This representation seems to differ from the one defined on top, but
+they are equivalent in nature. For example, if we look at the mean and
+the variance of this new definition:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(s_tot_4_3_bis)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 6.5</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(s_tot_4_3_bis)</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 17.75</span></span></code></pre></div>
-<p>Because we do not care about the nature of each of the mutations (this is, we do not care whether segregating sites are singletons, doubletons or etc.), this way of defining <span class="math inline">\(S_{total}\)</span> is more inefficient than the one on top. However, this second definition will be helpful for getting phase-type representations of i-tons (<span class="math inline">\(\xi_i\)</span>).</p>
+<p>Because we do not care about the nature of each of the mutations
+(this is, we do not care whether segregating sites are singletons,
+doubletons or etc.), this way of defining <span class="math inline">\(S_{total}\)</span> is more inefficient than the
+one on top. However, this second definition will be helpful for getting
+phase-type representations of i-tons (<span class="math inline">\(\xi_i\)</span>).</p>
 </div>
 <div id="i-tons-xi_i" class="section level2">
 <h2>3.3. i-tons (<span class="math inline">\(\xi_i\)</span>)</h2>
-<p>The i-tons <span class="math inline">\(\xi_i\)</span> can also be represented using a discrete phase-type distribution. We will use the same definition of Kingman’s coalescent process, but this time we need to the reward-transform the continuous phase-type distribution with a vector corresponding only to the branches that give rise to a certain <span class="math inline">\(\xi_i\)</span>.</p>
-<p>For example, the reward matrix for singletons and the subsequent continuous phase-type representation of the branches that give rise to singletons when <span class="math inline">\(n=4\)</span> (see Hobolth et al. <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span> for further details):</p>
+<p>The i-tons <span class="math inline">\(\xi_i\)</span> can also be
+represented using a discrete phase-type distribution. We will use the
+same definition of Kingman’s coalescent process, but this time we need
+to the reward-transform the continuous phase-type distribution with a
+vector corresponding only to the branches that give rise to a certain
+<span class="math inline">\(\xi_i\)</span>.</p>
+<p>For example, the reward matrix for singletons and the subsequent
+continuous phase-type representation of the branches that give rise to
+singletons when <span class="math inline">\(n=4\)</span> (see Hobolth et
+al. <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span> for further details):</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>reward <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>xi1_cont_4 <span class="ot">&lt;-</span> <span class="fu">reward_phase_type</span>(kingman_4, reward)</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>xi1_cont_4</span>
@@ -563,7 +927,9 @@ T_{total} = T_{MRCA} \circ [n, n-1, ..., 2]
 <span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
 <span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;cont_phase_type&quot;</span></span></code></pre></div>
-<p>Again, we need to discretize this continuous phase-type distribution for getting the discrete phase-type representation of <span class="math inline">\(\xi_1\)</span>. Using <strong>theorem 3.5</strong> in Hobolth et al. <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span>:</p>
+<p>Again, we need to discretize this continuous phase-type distribution
+for getting the discrete phase-type representation of <span class="math inline">\(\xi_1\)</span>. Using <strong>theorem 3.5</strong>
+in Hobolth et al. <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">2019</a>)</span>:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="dv">3</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>subint_mat <span class="ot">&lt;-</span> xi1_cont_4<span class="sc">$</span>subint_mat</span>
@@ -636,7 +1002,8 @@ T_{total} = T_{MRCA} \circ [n, n-1, ..., 2]
 <span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
 <span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;disc_phase_type&quot;</span></span></code></pre></div>
-<p>And, of course, we can compute the mean and variance for all these quantities:</p>
+<p>And, of course, we can compute the mean and variance for all these
+quantities:</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(xi1_4_3)<span class="sc">-</span><span class="dv">1</span>; <span class="fu">mean</span>(xi2_4_3)<span class="sc">-</span><span class="dv">1</span>; <span class="fu">mean</span>(xi3_4_3)<span class="sc">-</span><span class="dv">1</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3</span></span>
@@ -646,11 +1013,19 @@ T_{total} = T_{MRCA} \circ [n, n-1, ..., 2]
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 7</span></span>
 <span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 6.75</span></span>
 <span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.888889</span></span></code></pre></div>
-<p>Note that we need to subtract 1 from the mean to retrieve the true value. This is because of the way discrete phase-type distributions are defined (see <span class="citation">(<a href="#ref-Bladt2017" role="doc-biblioref">Bladt and Nielsen 2017</a>)</span> and <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">Hobolth, Siri-Jégousse, and Bladt 2019</a>)</span> for details).</p>
+<p>Note that we need to subtract 1 from the mean to retrieve the true
+value. This is because of the way discrete phase-type distributions are
+defined (see <span class="citation">(<a href="#ref-Bladt2017" role="doc-biblioref">Bladt and Nielsen 2017</a>)</span> and <span class="citation">(<a href="#ref-Hobolth2019" role="doc-biblioref">Hobolth, Siri-Jégousse, and Bladt 2019</a>)</span>
+for details).</p>
 </div>
 <div id="density-distribution-and-quantile-functions-1" class="section level2">
 <h2>3.4. Density, distribution and quantile functions</h2>
-<p><code>PhaseTypeR</code> also contains the density function (<code>dDPH()</code>), quantile function (<code>qDPH()</code>), distribution function (<code>pDPH()</code>) and random draw generator (<code>rDPH()</code>) for the discrete phase-type distribution. For example, for <span class="math inline">\(S_{total}\)</span> and singletons when <span class="math inline">\(n=4\)</span> and <span class="math inline">\(\theta=3\)</span>.</p>
+<p><code>PhaseTypeR</code> also contains the density function
+(<code>dDPH()</code>), quantile function (<code>qDPH()</code>),
+distribution function (<code>pDPH()</code>) and random draw generator
+(<code>rDPH()</code>) for the discrete phase-type distribution. For
+example, for <span class="math inline">\(S_{total}\)</span> and
+singletons when <span class="math inline">\(n=4\)</span> and <span class="math inline">\(\theta=3\)</span>.</p>
 <p>For example, the density function:</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dDPH</span>(<span class="dv">4</span>, s_tot_4_3)</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.1197062</span></span>
@@ -717,13 +1092,30 @@ T_{total} = T_{MRCA} \circ [n, n-1, ..., 2]
 </div>
 <div id="the-multivariate-continuous-phase-type-distribution-y_i" class="section level1">
 <h1>4. The Multivariate Continuous Phase-Type Distribution: <span class="math inline">\(Y_i\)</span></h1>
-<p>If the evolutionary tree is given, then each element of the site frequency spectrum (singletons, doubletons, etc) can be defined as mutations sprinkled over the tree following a Poisson distribution with rate <span class="math inline">\(\theta/2\)</span>. The mean of each <span class="math inline">\(\xi_i\)</span> will be directly proportional to the mean of the total branch length that gives rise to each i-ton, or <span class="math inline">\(Y_i\)</span>:</p>
+<p>If the evolutionary tree is given, then each element of the site
+frequency spectrum (singletons, doubletons, etc) can be defined as
+mutations sprinkled over the tree following a Poisson distribution with
+rate <span class="math inline">\(\theta/2\)</span>. The mean of each
+<span class="math inline">\(\xi_i\)</span> will be directly proportional
+to the mean of the total branch length that gives rise to each i-ton, or
+<span class="math inline">\(Y_i\)</span>:</p>
 <p><span class="math display">\[
 \mathop{\mathbb{E}}[\xi_i]=\mathop{\mathbb{E}}[\mathop{\mathbb{E}}(\xi_i|Y_i)]=
-\mathop{\mathbb{E}}\left[ \frac{\theta}{2}Y_i \right]=\frac{\theta}{2}\mathop{\mathbb{E}}[Y_i]
+\mathop{\mathbb{E}}\left[ \frac{\theta}{2}Y_i
+\right]=\frac{\theta}{2}\mathop{\mathbb{E}}[Y_i]
 \]</span></p>
-<p>Each <span class="math inline">\(Y_i\)</span> can be represented using a univariate phase-type distribution. However, instead of defining each <span class="math inline">\(Y_i\)</span> individually, we can build a multivariate phase-type representation of the coalescent process, such that <span class="math inline">\(Y\sim MPH^*(\alpha, S, R)\)</span>, where <span class="math inline">\(\alpha\)</span> is the initial probability vector, <span class="math inline">\(S\)</span> is the sub-intensity matrix for the coalescent process and <span class="math inline">\(R\)</span> is the reward vector where each of the columns summarizes how the sub-intensity matrix should be transformed to obtain a phase-type representation of <span class="math inline">\(Y_i\)</span>.</p>
-<p>For example, when <span class="math inline">\(n=4\)</span>, the sub-intensity matrix for Kingman’s coalescent is:</p>
+<p>Each <span class="math inline">\(Y_i\)</span> can be represented
+using a univariate phase-type distribution. However, instead of defining
+each <span class="math inline">\(Y_i\)</span> individually, we can build
+a multivariate phase-type representation of the coalescent process, such
+that <span class="math inline">\(Y\sim MPH^*(\alpha, S, R)\)</span>,
+where <span class="math inline">\(\alpha\)</span> is the initial
+probability vector, <span class="math inline">\(S\)</span> is the
+sub-intensity matrix for the coalescent process and <span class="math inline">\(R\)</span> is the reward vector where each of the
+columns summarizes how the sub-intensity matrix should be transformed to
+obtain a phase-type representation of <span class="math inline">\(Y_i\)</span>.</p>
+<p>For example, when <span class="math inline">\(n=4\)</span>, the
+sub-intensity matrix for Kingman’s coalescent is:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>subint_itons_4 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>,  <span class="dv">6</span>,  <span class="dv">0</span>,  <span class="dv">0</span>,</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                            <span class="dv">0</span>, <span class="sc">-</span><span class="dv">3</span>,  <span class="dv">2</span>,  <span class="dv">1</span>,</span>
@@ -735,7 +1127,9 @@ T_{total} = T_{MRCA} \circ [n, n-1, ..., 2]
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                         <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>                         <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
 <span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>                         <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">0</span>), <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">byrow =</span> T)</span></code></pre></div>
-<p>We can define a continuous phase-type representation of <span class="math inline">\(Y_i\)</span> with the <code>MPH</code> generator function, which will yield an object of class <code>mult_cont_phase_type</code>:</p>
+<p>We can define a continuous phase-type representation of <span class="math inline">\(Y_i\)</span> with the <code>MPH</code> generator
+function, which will yield an object of class
+<code>mult_cont_phase_type</code>:</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>Y_i_phase_type <span class="ot">&lt;-</span> <span class="fu">MPH</span>(<span class="at">subint_mat =</span> subint_itons_4, </span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">reward_mat =</span> reward_mat_4)</span>
@@ -785,19 +1179,24 @@ T_{total} = T_{MRCA} \circ [n, n-1, ..., 2]
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  1.7777778 -0.2222222  0.8888889</span></span>
 <span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,] -0.2222222  2.3333333 -0.4444444</span></span>
 <span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,]  0.8888889 -0.4444444  0.8888889</span></span></code></pre></div>
-<p>where the diagonal corresponds to the variance and the rest of the elements to the covariances.</p>
+<p>where the diagonal corresponds to the variance and the rest of the
+elements to the covariances.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Bladt2017" class="csl-entry">
-Bladt, Mogens, and Bo Friis Nielsen. 2017. <em><span class="nocase">Matrix-Exponential Distributions in Applied Probability</span></em>. Vol. 81. <a href="https://doi.org/10.1007/978-1-4939-7049-0">https://doi.org/10.1007/978-1-4939-7049-0</a>.
+Bladt, Mogens, and Bo Friis Nielsen. 2017. <em><span class="nocase">Matrix-Exponential Distributions in Applied
+Probability</span></em>. Vol. 81. <a href="https://doi.org/10.1007/978-1-4939-7049-0">https://doi.org/10.1007/978-1-4939-7049-0</a>.
 </div>
 <div id="ref-Hobolth2019" class="csl-entry">
-Hobolth, Asger, Arno Siri-Jégousse, and Mogens Bladt. 2019. <span>“<span class="nocase">Phase-type distributions in population genetics</span>.”</span> <em>Theoretical Population Biology</em> 127: 16–32. <a href="https://doi.org/10.1016/j.tpb.2019.02.001">https://doi.org/10.1016/j.tpb.2019.02.001</a>.
+Hobolth, Asger, Arno Siri-Jégousse, and Mogens Bladt. 2019. <span>“<span class="nocase">Phase-type distributions in population
+genetics</span>.”</span> <em>Theoretical Population Biology</em> 127:
+16–32. <a href="https://doi.org/10.1016/j.tpb.2019.02.001">https://doi.org/10.1016/j.tpb.2019.02.001</a>.
 </div>
 <div id="ref-Kingman1982" class="csl-entry">
-Kingman, John Frank Charles. 1982. <span>“The Coalescent.”</span> <em>Stochastic Processes and Their Applications</em> 13: 235–348. <a href="https://doi.org/10.1016/0304-4149(82)90011-4">https://doi.org/10.1016/0304-4149(82)90011-4</a>.
+Kingman, John Frank Charles. 1982. <span>“The Coalescent.”</span>
+<em>Stochastic Processes and Their Applications</em> 13: 235–348. <a href="https://doi.org/10.1016/0304-4149(82)90011-4">https://doi.org/10.1016/0304-4149(82)90011-4</a>.
 </div>
 </div>
 </div>
