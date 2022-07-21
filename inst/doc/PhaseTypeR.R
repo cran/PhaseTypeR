@@ -46,7 +46,8 @@ net <- phase_type_to_network(ph)
 set.seed(8)
 plot(net, edge.curved=.1, edge.label = E(net)$weight,
        edge.color = ifelse(as_data_frame(net, what="edges")$from == 'V0',
-                         'purple', 'grey'))
+                         'purple', 'grey'),
+     layout = layout_with_fr(net,  weights = rep(1, length(E(net)))))
 
 
 ## -----------------------------------------------------------------------------
@@ -59,7 +60,8 @@ for (i in c(0, 1, 3, 5, 10, 20)) {
   net <- phase_type_to_network(ph, i)
   plot(net, edge.arrow.size=0.5, edge.curved=.1, edge.label = E(net)$weight, main=paste0('time = ', i),
        edge.color = ifelse(as_data_frame(net, what="edges")$from == 'V0',
-                         'purple', 'grey'))
+                         'purple', 'grey'),
+       layout = layout_with_fr(net,  weights = rep(1, length(E(net)))))
 }
 
 ## -----------------------------------------------------------------------------
@@ -132,7 +134,8 @@ dph
 
 net <- phase_type_to_network(dph)
 set.seed(8)
-plot(net, edge.curved=.1, edge.label = E(net)$weight)
+plot(net, edge.curved=.1, edge.label = E(net)$weight,
+     layout = layout_with_fr(net,  weights = rep(1, length(E(net)))))
 
 
 ## ----mean_var_disc------------------------------------------------------------

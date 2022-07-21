@@ -14,14 +14,15 @@
 #' @return An igraph graph object of the phase-type distribution.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' cont_phase_type <- matrix(c(-3, 0, 1,
 #'                             2, -3, 1,
 #'                             1, 1, -2), ncol = 3)
 #' Y <- PH(cont_phase_type)
 #' Y_network <- phase_type_to_network(Y)
 #' set.seed(28)
-#' plot(Y_network)
+#' plot(Y_network, layout = layout_with_fr(Y_network,  weights = rep(1, length(E(Y_network)))))
+#' }
 #'
 #' @importFrom igraph graph_from_data_frame
 #'
